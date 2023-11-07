@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <array>
+#include <filesystem>
 
 using namespace std;
 constexpr uint8_t header_size = 4;
@@ -11,7 +12,7 @@ const string filename = "employees.txt";
 
 struct Person {
     string name;
-    uint16_t age;
+    unsigned int age;
     string id;
 };
 
@@ -65,24 +66,24 @@ int main()
     {
         switch(choice) {
             case 1: changePay(employees, header);
+            system("pause");
             system("cls");
-            system("clear");
             break;
             case 2: addEmployee(employees, header);
+            system("pause");
             system("cls");
-            system("clear");
             break; 
             case 3: removeEmployee(employees, header);
+            system("pause");
             system("cls");
-            system("clear");
             break;
-            case 4: searchEmployee(employees);
+            case 4: displayEmployees(employees);
+            system("pause");
             system("cls");
-            system("clear");
             break;
-            case 5: // search specific employee by index
+            case 5: searchEmployee(employees);
+            system("pause");
             system("cls");
-            system("clear");
             break;
             default: return 0;
         }
@@ -102,6 +103,7 @@ int menu()
     cout << "4. Display All Employees \n";
     cout << "5. Search Employee \n";
     cout << "6. Exit \n";
+    cout << "Input : ";
     cin >> choice;
     return choice;
 }
@@ -181,7 +183,7 @@ void saveFile(const vector<Payroll>& employees, const string& header)
 
     // Iterate through the employees vector and write employee data to the file
         for (size_t i = 0; i < employees.size(); ++i) {
-            write_file << employees[i].getPerson().name << ',' << employees[i].getPerson().age << ',' << employees[i].getSalary() << employees[i].getPerson().id;
+            write_file << employees[i].getPerson().name << ',' << employees[i].getPerson().age << ',' << employees[i].getSalary() << ',' << employees[i].getPerson().id;
             
             // Add a newline character if there is another employee data to follow
             if (i < employees.size() - 1) {
@@ -228,7 +230,7 @@ void displayEmployees(const vector<Payroll>& employees)
 void addEmployee(vector<Payroll>& employees, const string& header)
 {
     string name, emp_id;
-    uint16_t age;
+    unsigned int age;
     double initial_salary;
 
     cout << "Enter Name: ";
